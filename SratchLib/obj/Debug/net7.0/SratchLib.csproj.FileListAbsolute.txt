@@ -1,0 +1,12 @@
+C:\github\scratchpad\SratchLib\bin\Debug\net7.0\SratchLib.deps.json
+C:\github\scratchpad\SratchLib\bin\Debug\net7.0\SratchLib.dll
+C:\github\scratchpad\SratchLib\bin\Debug\net7.0\SratchLib.pdb
+C:\github\scratchpad\SratchLib\obj\Debug\net7.0\SratchLib.csproj.AssemblyReference.cache
+C:\github\scratchpad\SratchLib\obj\Debug\net7.0\SratchLib.GeneratedMSBuildEditorConfig.editorconfig
+C:\github\scratchpad\SratchLib\obj\Debug\net7.0\SratchLib.AssemblyInfoInputs.cache
+C:\github\scratchpad\SratchLib\obj\Debug\net7.0\SratchLib.AssemblyInfo.cs
+C:\github\scratchpad\SratchLib\obj\Debug\net7.0\SratchLib.csproj.CoreCompileInputs.cache
+C:\github\scratchpad\SratchLib\obj\Debug\net7.0\SratchLib.dll
+C:\github\scratchpad\SratchLib\obj\Debug\net7.0\refint\SratchLib.dll
+C:\github\scratchpad\SratchLib\obj\Debug\net7.0\SratchLib.pdb
+C:\github\scratchpad\SratchLib\obj\Debug\net7.0\ref\SratchLib.dll
