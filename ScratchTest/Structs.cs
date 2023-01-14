@@ -13,7 +13,7 @@ namespace ScratchTest
         public void Structs_Are_Mutable()
         {
             // Structs are mutable unless you make them immutable by making the struct and its properties readonly.
-            // But a struct with a reference type property is dangerous because changing one affects all copies.
+            // A struct with a reference type property is dangerous because changing the property affects all copies.
 
             // Arrange - create a struct
             MyStruct struct1 = new MyStruct("Hello World!") { X = 1, Y = 2 }; 
