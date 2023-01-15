@@ -1,0 +1,13 @@
+
+https://dotnetos.org/blog/2022-03-28-dictionary-implementation/
+
+https://thomaslevesque.com/2020/05/15/things-every-csharp-developer-should-know-1-hash-codes/
+
+https://github.com/microsoft/referencesource/blob/master/mscorlib/system/collections/generic/dictionary.cs
+
+Dictionary<TKey,TValue> is based on a hashtable that represents a collection of key/value pairs that
+are organized based on the hash code of the key.
+    - internally values are stored in buckets, which are indexed by the key's HashCode 
+    - Every key must be unique
+    - The speed of retrieval depends on the quality of the hashing algorithm.
+
