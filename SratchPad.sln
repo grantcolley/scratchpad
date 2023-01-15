@@ -5,7 +5,13 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SratchLib", "SratchLib\SratchLib.csproj", "{572F71F9-E32F-498A-BE73-A20CCAFF9ACC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScratchTest", "ScratchTest\ScratchTest.csproj", "{EC296A43-63FB-40FA-BA45-992E6BF7DD5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScratchTest", "ScratchTest\ScratchTest.csproj", "{EC296A43-63FB-40FA-BA45-992E6BF7DD5E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notes", "Notes", "{86AC7868-047E-4079-9469-C33EAD45D694}"
+	ProjectSection(SolutionItems) = preProject
+		Dictionary.txt = Dictionary.txt
+		Memory.txt = Memory.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
