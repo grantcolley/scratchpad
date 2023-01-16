@@ -12,8 +12,8 @@ namespace ScratchTest
         // corresponds to the value of an object."
         //
         // "A hash code is a numeric value that is used to insert and identify an object in a hash-based collection
-        // such as the Dictionary<TKey,TValue> class.
-        // The GetHashCode() method provides this hash code for algorithms that need quick checks of object equality."
+        // such as the Dictionary<TKey,TValue> class or HashSet<T> class.
+        // The GetHashCode() method provides a hash code for algorithms that need quick checks of object equality."
         // 
         // Note:
         //  - You should not assume that equal hash codes imply object equality.
