@@ -6,8 +6,129 @@ https://thomaslevesque.com/2020/05/15/things-every-csharp-developer-should-know-
 https://github.com/microsoft/referencesource/blob/master/mscorlib/system/collections/generic/dictionary.cs
 
 Dictionary<TKey,TValue> is based on a hashtable that represents a collection of key/value pairs that
-are organized based on the hash code of the key.
-    - internally values are stored in buckets, which are indexed by the key's HashCode 
+are organized based on the hash code of the key. 
+
+Conceptually the idea is a key/value pair is stored in a struct called an Entry.
+- Entries are stored in an array of entries.
+- There is also an array of buckets.
+- Each entry is linked to a bucket.
+- A bucket can link more than one entry.
+
+Which bucket an entry is linked to depends on the key associated to the value:
+
+    int targetBucket = key.GetHashCode() % buckets.Length;
+
+When searching for a value using the key:
+    1. use the keys hash to determine which bucket to search
+    2. get the target bucket and iterate over the entries associated with it until you find one with the matching key
+
+In summary, using the keys HashCode go straight to a bucket which will provide a small sub set of entries to search through, 
+rather than having to search through the entire list of values.
+
+Additional Notes:
     - Every key must be unique
     - The speed of retrieval depends on the quality of the hashing algorithm.
 
+From the source code:
+
+       private struct Entry 
+       {
+           public int hashCode;    // Lower 31 bits of hash code, -1 if unused
+           public int next;        // Index of next entry, -1 if last
+           public TKey key;           // Key of entry
+           public TValue value;         // Value of entry
+       }
+
+       private int[] buckets;
+       private Entry[] entries;
+       private int count;
+       private int version;
+       private int freeList;
+       private int freeCount;
+       private IEqualityComparer<TKey> comparer;
+
+       public TValue this[TKey key] 
+       {
+            get 
+            {
+                int i = FindEntry(key);
+                if (i >= 0) return entries[i].value;
+                ThrowHelper.ThrowKeyNotFoundException();
+                return default(TValue);
+            }
+            set 
+            {
+                Insert(key, value, false);
+            }
+        }
+
+        public void Add(TKey key, TValue value) 
+        {
+            Insert(key, value, true);
+        }
+
+        private void Insert(TKey key, TValue value, bool add) 
+        {
+            // code removed for brevity...
+
+            int hashCode = comparer.GetHashCode(key) & 0x7FFFFFFF;
+            int targetBucket = hashCode % buckets.Length;
+
+            // first check if it exists in which case update and return
+            for (int i = buckets[targetBucket]; i >= 0; i = entries[i].next) 
+            {
+                if (entries[i].hashCode == hashCode && comparer.Equals(entries[i].key, key)) 
+                {
+                    if (add) 
+                    { 
+                        ThrowHelper.ThrowArgumentException(ExceptionResource.Argument_AddingDuplicate);
+                    }
+
+                    entries[i].value = value;
+                    version++;
+                    return;
+                } 
+            }
+
+            int index;
+            if (freeCount > 0) 
+            {
+                index = freeList;
+                freeList = entries[index].next;
+                freeCount--;
+            }
+            else 
+            {
+                if (count == entries.Length)
+                {
+                    Resize();
+                    targetBucket = hashCode % buckets.Length;
+                }
+                index = count;
+                count++;
+            }
+
+            entries[index].hashCode = hashCode;
+            entries[index].next = buckets[targetBucket];
+            entries[index].key = key;
+            entries[index].value = value;
+            buckets[targetBucket] = index;
+        }
+
+        private int FindEntry(TKey key) 
+        {
+            if (buckets != null) 
+            {
+                int hashCode = comparer.GetHashCode(key) & 0x7FFFFFFF;
+
+                for (int i = buckets[hashCode % buckets.Length]; i >= 0; i = entries[i].next) 
+                {
+                    if (entries[i].hashCode == hashCode && comparer.Equals(entries[i].key, key))
+                    {
+                        return i;
+                    }
+                }
+            }
+
+            return -1;
+        }
