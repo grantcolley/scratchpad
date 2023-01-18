@@ -8,13 +8,14 @@ https://github.com/microsoft/referencesource/blob/master/mscorlib/system/collect
 Dictionary<TKey,TValue> is based on a hashtable that represents a collection of key/value pairs that
 are organized based on the hash code of the key. 
 
-Conceptually the idea is a key/value pair is stored in a struct called an Entry.
+Conceptually the idea is a key/value pair
+- is stored in a struct called an Entry.
 - Entries are stored in an array of entries.
-- There is also an array of buckets.
-- Each entry is linked to a bucket.
-- A bucket can link more than one entry.
+- There is also an array of buckets, of type Int32. 
+- Each entry is linked to a bucket, via it's HashCode.
+- A bucket can link more than one entry together.
 
-Which bucket an entry is linked to depends on the key associated to the value:
+Which bucket an entry is "in" depends on the HashCode of the key:
 
     int targetBucket = key.GetHashCode() % buckets.Length;
 
@@ -22,7 +23,7 @@ When searching for a value using the key:
     1. use the keys hash to determine which bucket to search
     2. get the target bucket and iterate over the entries associated with it until you find one with the matching key
 
-In summary, using the keys HashCode go straight to a bucket which will provide a small sub set of entries to search through, 
+In summary, using the keys HashCode go straight to a bucket which will provide a small sub set of linked entries to search through, 
 rather than having to search through the entire list of values.
 
 Additional Notes:
